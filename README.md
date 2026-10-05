@@ -8,6 +8,7 @@ A merchant creates an invoice and sends a link. The buyer opens it, pays from th
 - **Paid invoice you can open without a wallet:** https://tally-invoices.vercel.app/?i=1
 - **Contract on Arc mainnet:** [`0xF8c0cD6eD0a111d64661cB090498921753A565cf`](https://www.arcexplorer.org/address/0xF8c0cD6eD0a111d64661cB090498921753A565cf)
 - **Telegram notifier:** [@TallyInvoicesBot](https://t.me/TallyInvoicesBot)
+- **60-second demo video:** https://tally-invoices.vercel.app/demo.mp4
 
 ## Why Arc
 
@@ -23,8 +24,10 @@ A merchant creates an invoice and sends a link. The buyer opens it, pays from th
 | deploy | [`0xc053…ca97`](https://www.arcexplorer.org/tx/0xc053dec1752133a462b814b077421c93c8df04f99ac8f34a6bf46542cf06ca97) |
 | invoice #1 created, 0.50 USDC | [`0x90f5…37af`](https://www.arcexplorer.org/tx/0x90f52d7e2ca0fd3a53f3ef6c634b7d316f9de78a71d8fe4a4bba76a71f7a37af) |
 | invoice #1 paid by a different wallet | [`0xf7da…3919`](https://www.arcexplorer.org/tx/0xf7daedf6339f51c8f9d3b8b14272e3692705ec58859ee4352fc98503332f3919) |
+| invoice #2 paid, Telegram notification delivered | [`0xb853…c67a`](https://www.arcexplorer.org/tx/0xb853528b15aef67725828dc1b6e489a47003d5437be67942ff085a0d7035c67a) |
+| invoice #3 in **EURC** paid (approve + pay) | [`0x8ee6…77f5`](https://www.arcexplorer.org/tx/0x8ee6569a9d42dca0d60a45aaa01c245465290119839997dfa175aacd6d1877f5) |
 
-After the payment the merchant was up exactly 0.50 USDC and the contract balance was 0. Deploying cost 0.034 USDC; paying the invoice cost the buyer about 0.0014 USDC in gas.
+After each payment the merchant was up exactly the invoice amount (0.50 USDC, 0.25 USDC, 0.50 EURC) and the contract balance stayed at 0. Deploying cost 0.034 USDC; paying the invoice cost the buyer about 0.0014 USDC in gas.
 
 ## How it works
 
@@ -35,7 +38,7 @@ buyer    ──pay(id) {value: amount}─────────────▶
 ```
 
 - `src/TallyInvoices.sol` - the contract. Invoice states are Open, Paid and Cancelled. State changes before money moves, so a re-entrant call finds the invoice already paid. Token addresses without code are rejected, so an invoice can't be "paid" by a call that moves nothing.
-- `web/` - a single static page (viem, no build step) plus a read-only RPC proxy for regions where the public endpoint is blocked. The invoice page shows amount, status, payer and the payment transaction to anyone, wallet or not.
+- `web/` - a single static page (viem bundled into `app.js` by `web/build.sh`, loads in about a second) plus a read-only RPC proxy for regions where the public endpoint is blocked. The invoice page shows amount, status, payer and the payment transaction to anyone, wallet or not.
 - `bot/tally_bot.py` - the merchant sends `/watch <address>`, the bot follows the contract's events and messages them. It only reads the chain.
 
 ## Run it yourself
