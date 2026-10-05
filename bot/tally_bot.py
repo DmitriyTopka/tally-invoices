@@ -29,8 +29,8 @@ NATIVE = "0x0000000000000000000000000000000000000000"
 EURC = "0xbEf5f6d51CB62b58e6A8f77868681825C6fe21c1".lower()
 
 ABI = json.loads("""[
- {"type":"event","name":"InvoiceCreated","inputs":[{"name":"id","type":"uint256","indexed":true},{"name":"merchant","type":"address","indexed":true},{"name":"token","type":"address","indexed":false},{"name":"amount","type":"uint256","indexed":false},{"name":"memo","type":"string","indexed":false}]},
- {"type":"event","name":"InvoicePaid","inputs":[{"name":"id","type":"uint256","indexed":true},{"name":"payer","type":"address","indexed":true},{"name":"merchant","type":"address","indexed":true},{"name":"token","type":"address","indexed":false},{"name":"amount","type":"uint256","indexed":false}]}
+ {"type":"event","anonymous":false,"name":"InvoiceCreated","inputs":[{"name":"id","type":"uint256","indexed":true},{"name":"merchant","type":"address","indexed":true},{"name":"token","type":"address","indexed":false},{"name":"amount","type":"uint256","indexed":false},{"name":"memo","type":"string","indexed":false}]},
+ {"type":"event","anonymous":false,"name":"InvoicePaid","inputs":[{"name":"id","type":"uint256","indexed":true},{"name":"payer","type":"address","indexed":true},{"name":"merchant","type":"address","indexed":true},{"name":"token","type":"address","indexed":false},{"name":"amount","type":"uint256","indexed":false}]}
 ]""")
 
 log = logging.getLogger("tally")
