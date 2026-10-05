@@ -1,0 +1,8 @@
+out/
+cache/
+broadcast/
+*.db
+.env
+__pycache__/
+.vercel
+tools/arc_rpc.py
