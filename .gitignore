@@ -6,3 +6,4 @@ broadcast/
 __pycache__/
 .vercel
 tools/arc_rpc.py
+SUBMISSION_draft.md
