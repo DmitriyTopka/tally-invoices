@@ -4,6 +4,7 @@ A merchant sends /watch <address>. The bot follows the TallyInvoices contract
 on Arc mainnet and messages the merchant when one of their invoices is created
 or paid. It only reads the chain; it never holds keys.
 """
+import html
 import json
 import logging
 import os
@@ -135,7 +136,7 @@ def notify(event):
                 f"<code>{short(a['payer'])}</code>\n<a href=\"{EXPLORER}/tx/{tx}\">transaction</a> · <a href=\"{page}\">invoice</a>")
     else:
         text = (f"🧾 Invoice #{inv_id} created: {fmt_amount(a['token'], a['amount'])}\n"
-                f"{a['memo']}\nShare: {page}")
+                f"{html.escape(a['memo'])}\nShare: {html.escape(page)}")
     for chat_id in chats:
         send(chat_id, text)
 
